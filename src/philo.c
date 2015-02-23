@@ -1,8 +1,19 @@
+/*
+** philo.c for philo in /home/lauret_s/rendu/PSU_2014_philo/src
+**
+** Made by Sebastien Lauret
+** Login   <lauret_s@epitech.net>
+**
+** Started on  Mon Feb 23 21:35:57 2015 Sebastien Lauret
+** Last update Mon Feb 23 21:37:38 2015 Sebastien Lauret
+*/
+
+#include <unistd.h>
 #include <pthread.h>
 #include <stdio.h>
 #include "philo.h"
 
-void	sleep(int philo)
+void	philo_sleep(int philo)
 {
   int	philo_left;
   int	philo_right;

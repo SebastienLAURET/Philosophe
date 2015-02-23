@@ -1,3 +1,13 @@
+/*
+** main.c for main in /home/lauret_s/rendu/PSU_2014_philo/src
+**
+** Made by Sebastien Lauret
+** Login   <lauret_s@epitech.net>
+**
+** Started on  Mon Feb 23 21:36:18 2015 Sebastien Lauret
+** Last update Mon Feb 23 21:36:20 2015 Sebastien Lauret
+*/
+
 #include <pthread.h>
 #include "philo.h"
 
