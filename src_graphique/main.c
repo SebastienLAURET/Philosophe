@@ -5,7 +5,7 @@
 ** Login   <rosain_f@epitech.net>
 **
 ** Started on  Sun Feb 22 08:32:03 2015 Francois Rosain
-** Last update Mon Feb 23 21:42:58 2015 Sebastien Lauret
+** Last update Mon Feb 23 21:57:28 2015 Sebastien Lauret
 */
 
 #include <pthread.h>
@@ -30,53 +30,53 @@ void	update_images()
 {
   printf("--- --- --- --- ---\n");
   if (g_stat_philo[0] == EAT)
-    gtk_image_set_from_file(GTK_IMAGE(pImage0), "./images/eat.png");
+    gtk_image_set_from_file(GTK_IMAGE(pImage0), "./src_graphique/images/eat.png");
   else if (g_stat_philo[0] == SLEEP)
-    gtk_image_set_from_file(GTK_IMAGE(pImage0), "./images/sleep.png");
+    gtk_image_set_from_file(GTK_IMAGE(pImage0), "./src_graphique/images/sleep.png");
   else if (g_stat_philo[0] == THINK)
-    gtk_image_set_from_file(GTK_IMAGE(pImage0), "./images/think.png");
+    gtk_image_set_from_file(GTK_IMAGE(pImage0), "./src_graphique/images/think.png");
 
   if (g_stat_philo[1] == EAT)
-    gtk_image_set_from_file(GTK_IMAGE(pImage1), "./images/eat.png");
+    gtk_image_set_from_file(GTK_IMAGE(pImage1), "./src_graphique/images/eat.png");
   else if (g_stat_philo[1] == SLEEP)
-    gtk_image_set_from_file(GTK_IMAGE(pImage1), "./images/sleep.png");
+    gtk_image_set_from_file(GTK_IMAGE(pImage1), "./src_graphique/images/sleep.png");
   else if (g_stat_philo[1] == THINK)
-    gtk_image_set_from_file(GTK_IMAGE(pImage1), "./images/think.png");
+    gtk_image_set_from_file(GTK_IMAGE(pImage1), "./src_graphique/images/think.png");
 
   if (g_stat_philo[2] == EAT)
-    gtk_image_set_from_file(GTK_IMAGE(pImage2), "./images/eat.png");
+    gtk_image_set_from_file(GTK_IMAGE(pImage2), "./src_graphique/images/eat.png");
   else if (g_stat_philo[2] == SLEEP)
-    gtk_image_set_from_file(GTK_IMAGE(pImage2), "./images/sleep.png");
+    gtk_image_set_from_file(GTK_IMAGE(pImage2), "./src_graphique/images/sleep.png");
   else if (g_stat_philo[2] == THINK)
-    gtk_image_set_from_file(GTK_IMAGE(pImage2), "./images/think.png");
+    gtk_image_set_from_file(GTK_IMAGE(pImage2), "./src_graphique/images/think.png");
 
   if (g_stat_philo[3] == EAT)
-    gtk_image_set_from_file(GTK_IMAGE(pImage3), "./images/eat.png");
+    gtk_image_set_from_file(GTK_IMAGE(pImage3), "./src_graphique/images/eat.png");
   else if (g_stat_philo[3] == SLEEP)
-    gtk_image_set_from_file(GTK_IMAGE(pImage3), "./images/sleep.png");
+    gtk_image_set_from_file(GTK_IMAGE(pImage3), "./src_graphique/images/sleep.png");
   else if (g_stat_philo[3] == THINK)
-    gtk_image_set_from_file(GTK_IMAGE(pImage3), "./images/think.png");
+    gtk_image_set_from_file(GTK_IMAGE(pImage3), "./src_graphique/images/think.png");
 
   if (g_stat_philo[4] == EAT)
-    gtk_image_set_from_file(GTK_IMAGE(pImage4), "./images/eat.png");
+    gtk_image_set_from_file(GTK_IMAGE(pImage4), "./src_graphique/images/eat.png");
   else if (g_stat_philo[4] == SLEEP)
-    gtk_image_set_from_file(GTK_IMAGE(pImage4), "./images/sleep.png");
+    gtk_image_set_from_file(GTK_IMAGE(pImage4), "./src_graphique/images/sleep.png");
   else if (g_stat_philo[4] == THINK)
-    gtk_image_set_from_file(GTK_IMAGE(pImage4), "./images/think.png");
+    gtk_image_set_from_file(GTK_IMAGE(pImage4), "./src_graphique/images/think.png");
 
   if (g_stat_philo[5] == EAT)
-    gtk_image_set_from_file(GTK_IMAGE(pImage5), "./images/eat.png");
+    gtk_image_set_from_file(GTK_IMAGE(pImage5), "./src_graphique/images/eat.png");
   else if (g_stat_philo[5] == SLEEP)
-    gtk_image_set_from_file(GTK_IMAGE(pImage5), "./images/sleep.png");
+    gtk_image_set_from_file(GTK_IMAGE(pImage5), "./src_graphique/images/sleep.png");
   else if (g_stat_philo[5] == THINK)
-    gtk_image_set_from_file(GTK_IMAGE(pImage5), "./images/think.png");
+    gtk_image_set_from_file(GTK_IMAGE(pImage5), "./src_graphique/images/think.png");
 
   if (g_stat_philo[6] == EAT)
-    gtk_image_set_from_file(GTK_IMAGE(pImage6), "./images/eat.png");
+    gtk_image_set_from_file(GTK_IMAGE(pImage6), "./src_graphique/images/eat.png");
   else if (g_stat_philo[6] == SLEEP)
-    gtk_image_set_from_file(GTK_IMAGE(pImage6), "./images/sleep.png");
+    gtk_image_set_from_file(GTK_IMAGE(pImage6), "./src_graphique/images/sleep.png");
   else if (g_stat_philo[6] == THINK)
-    gtk_image_set_from_file(GTK_IMAGE(pImage6), "./images/think.png");
+    gtk_image_set_from_file(GTK_IMAGE(pImage6), "./src_graphique/images/think.png");
 }
 
 static int	philosophes(GtkWidget *pWindow)
@@ -127,31 +127,31 @@ int		main(int ac, char **av)
   gtk_container_add(GTK_CONTAINER(pWindow), pHBox);
 
   /* Loading images  :  default sleep.png */
-  pImage0 = gtk_image_new_from_file("./images/sleep.png");
+  pImage0 = gtk_image_new_from_file("./src_graphique/images/sleep.png");
   gtk_widget_set_size_request(pImage0, 132, 132);
   gtk_box_pack_start(GTK_BOX(pHBox), pImage0, 0, 0, 5);
 
-  pImage1 = gtk_image_new_from_file("./images/sleep.png");
+  pImage1 = gtk_image_new_from_file("./src_graphique/images/sleep.png");
   gtk_widget_set_size_request(pImage1, 132, 132);
   gtk_box_pack_start(GTK_BOX(pHBox), pImage1, 0, 0, 5);
 
-  pImage2 = gtk_image_new_from_file("./images/sleep.png");
+  pImage2 = gtk_image_new_from_file("./src_graphique/images/sleep.png");
   gtk_widget_set_size_request(pImage2, 132, 132);
   gtk_box_pack_start(GTK_BOX(pHBox), pImage2, 0, 0, 5);
 
-  pImage3 = gtk_image_new_from_file("./images/sleep.png");
+  pImage3 = gtk_image_new_from_file("./src_graphique/images/sleep.png");
   gtk_widget_set_size_request(pImage3, 132, 132);
   gtk_box_pack_start(GTK_BOX(pHBox), pImage3, 0, 0, 5);
 
-  pImage4 = gtk_image_new_from_file("./images/sleep.png");
+  pImage4 = gtk_image_new_from_file("./src_graphique/images/sleep.png");
   gtk_widget_set_size_request(pImage4, 132, 132);
   gtk_box_pack_start(GTK_BOX(pHBox), pImage4, 0, 0, 5);
 
-  pImage5 = gtk_image_new_from_file("./images/sleep.png");
+  pImage5 = gtk_image_new_from_file("./src_graphique/images/sleep.png");
   gtk_widget_set_size_request(pImage5, 132, 132);
   gtk_box_pack_start(GTK_BOX(pHBox), pImage5, 0, 0, 5);
 
-  pImage6 = gtk_image_new_from_file("./images/sleep.png");
+  pImage6 = gtk_image_new_from_file("./src_graphique/images/sleep.png");
   gtk_widget_set_size_request(pImage6, 132, 132);
   gtk_box_pack_start(GTK_BOX(pHBox), pImage6, 0, 0, 5);
   philosophes(pWindow);
