@@ -1,17 +1,17 @@
 /*
 ** main.c for philosophes in /home/rosain_f/rendu/PSU_2014_philo
-** 
+**
 ** Made by Francois Rosain
 ** Login   <rosain_f@epitech.net>
-** 
+**
 ** Started on  Sun Feb 22 08:32:03 2015 Francois Rosain
-** Last update Mon Feb 23 16:23:31 2015 Francois Rosain
+** Last update Mon Feb 23 21:42:58 2015 Sebastien Lauret
 */
 
 #include <pthread.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <gtk/gtk.h>
+#include "gtk/gtk.h"
 #include "philosophe.h"
 
 # define TURN_TIME 1
@@ -101,14 +101,14 @@ static int	philosophes(GtkWidget *pWindow)
   pthread_create(&philosopher_6, NULL, handle_philosopher_6, NULL);
   pthread_create(&philosopher_7, NULL, handle_philosopher_7, NULL);
 
-  g_timeout_add(500, (GSourceFunc) update_images, NULL);  
+  g_timeout_add(500, (GSourceFunc) update_images, NULL);
 
   gtk_widget_show_all(pWindow);
   gtk_main();
 }
 
 int		main(int ac, char **av)
-{ 
+{
   GtkWidget	*pWindow;
   GtkWidget	*pHBox;
   GtkWidget	*pQuitImage;
@@ -128,13 +128,13 @@ int		main(int ac, char **av)
 
   /* Loading images  :  default sleep.png */
   pImage0 = gtk_image_new_from_file("./images/sleep.png");
-  gtk_widget_set_size_request(pImage0, 132, 132);  
+  gtk_widget_set_size_request(pImage0, 132, 132);
   gtk_box_pack_start(GTK_BOX(pHBox), pImage0, 0, 0, 5);
-  
+
   pImage1 = gtk_image_new_from_file("./images/sleep.png");
   gtk_widget_set_size_request(pImage1, 132, 132);
   gtk_box_pack_start(GTK_BOX(pHBox), pImage1, 0, 0, 5);
-  
+
   pImage2 = gtk_image_new_from_file("./images/sleep.png");
   gtk_widget_set_size_request(pImage2, 132, 132);
   gtk_box_pack_start(GTK_BOX(pHBox), pImage2, 0, 0, 5);

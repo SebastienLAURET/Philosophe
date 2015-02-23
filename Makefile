@@ -5,7 +5,7 @@
 ## Login   <lauret_s@epitech.net>
 ##
 ## Started on  Mon Feb 23 20:45:08 2015 Sebastien Lauret
-## Last update Mon Feb 23 21:26:10 2015 Sebastien Lauret
+## Last update Mon Feb 23 21:53:39 2015 Sebastien Lauret
 ##
 
 NAME1	= philo
@@ -26,7 +26,7 @@ OBJ2	= $(FILE2:.c=.o)
 
 GCC	= gcc
 
-FLAG	= -pthread  -W -Wall -Wextra -g3 -o
+FLAG	= -pthread -W -Wall -Wextra -g3 -o
 
 GRAPH	= `pkg-config --cflags --libs gtk+-2.0`
 
@@ -39,10 +39,10 @@ base: $(NAME1)
 plus: $(NAME2)
 
 $(NAME1): $(OBJ1)
-	$(GCC) $(FLAG) $(NAME1) $(FILE1)
+	$(GCC) $(FLAG) $(NAME1) $(OBJ1)
 
-$(NAME2): $(OBJ2)
-	$(GCC) $(GRAPH) $(FLAG) $(NAME2) $(FILE2)
+$(NAME2):
+	$(GCC) $(GRAPH) $(FILE2) $(FLAG) $(NAME2)
 
 clean:
 	$(RM) $(OBJ1) $(OBJ2)
