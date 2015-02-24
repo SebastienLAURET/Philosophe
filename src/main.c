@@ -5,7 +5,7 @@
 ** Login   <lauret_s@epitech.net>
 **
 ** Started on  Mon Feb 23 21:36:18 2015 Sebastien Lauret
-** Last update Mon Feb 23 21:36:20 2015 Sebastien Lauret
+** Last update Tue Feb 24 10:02:47 2015 Francois Rosain
 */
 
 #include <pthread.h>
@@ -18,6 +18,7 @@ pthread_mutex_t g_baguette_4 = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t g_baguette_5 = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t g_baguette_6 = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t g_baguette_7 = PTHREAD_MUTEX_INITIALIZER;
+
 stat		g_stat_philo[7] =
   {
     SLEEP,
@@ -28,7 +29,6 @@ stat		g_stat_philo[7] =
     SLEEP,
     SLEEP
   };
-
 
 int	main()
 {
