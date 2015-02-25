@@ -5,7 +5,7 @@
 ** Login   <lauret_s@epitech.net>
 **
 ** Started on  Mon Feb 23 21:35:05 2015 Sebastien Lauret
-** Last update Wed Feb 25 16:14:35 2015 Sebastien Lauret
+** Last update Wed Feb 25 16:16:31 2015 Sebastien Lauret
 */
 
 #include <stdio.h>
@@ -13,7 +13,7 @@
 
 void	handler(pthread_mutex_t *bag_pa, pthread_mutex_t *bag_pn, t_env *philo)
 {
-  while (*philo->nb_riz > philo->nb_philo)
+  while (*philo->nb_riz > philo->nb_philo - 1)
     {
       philo_sleep(philo->stat_philo, philo->id_philo, philo->nb_philo);
       action(bag_pa, bag_pn, philo);
