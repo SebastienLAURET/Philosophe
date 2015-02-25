@@ -5,7 +5,7 @@
 ## Login   <lauret_s@epitech.net>
 ##
 ## Started on  Mon Feb 23 20:45:08 2015 Sebastien Lauret
-## Last update Mon Feb 23 21:53:39 2015 Sebastien Lauret
+## Last update Wed Feb 25 13:59:26 2015 Sebastien Lauret
 ##
 
 NAME1	= philo
@@ -14,8 +14,7 @@ NAME2	= philo_graph
 
 FILE1	= src/main.c \
 	  src/philo.c \
-	  src/handler_1.c \
-	  src/handler_2.c
+	  src/handler.c
 
 FILE2	= src_graphique/main.c \
 	  src_graphique/simulator.c
@@ -28,7 +27,7 @@ GCC	= gcc
 
 FLAG	= -pthread -W -Wall -Wextra -g3 -o
 
-GRAPH	= `pkg-config --cflags --libs gtk+-2.0`
+CFLAGS	= `pkg-config --cflags --libs gtk+-2.0`
 
 RM	= rm -f
 
@@ -41,8 +40,8 @@ plus: $(NAME2)
 $(NAME1): $(OBJ1)
 	$(GCC) $(FLAG) $(NAME1) $(OBJ1)
 
-$(NAME2):
-	$(GCC) $(GRAPH) $(FILE2) $(FLAG) $(NAME2)
+$(NAME2):  $(OBJ2)
+	$(GCC) $(CFLAGS) $(FILE2) $(FLAG) $(NAME2)
 
 clean:
 	$(RM) $(OBJ1) $(OBJ2)
