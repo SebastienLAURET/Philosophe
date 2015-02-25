@@ -5,7 +5,7 @@
 ** Login   <lauret_s@epitech.net>
 **
 ** Started on  Mon Feb 23 21:36:18 2015 Sebastien Lauret
-** Last update Wed Feb 25 17:56:58 2015 Sebastien Lauret
+** Last update Wed Feb 25 18:13:34 2015 Sebastien Lauret
 */
 
 #include <stdlib.h>
@@ -14,7 +14,7 @@
 #include <term.h>
 #include "philo.h"
 
-t_env	*init(int nb_philo)
+t_env	*init(int nb_philo, int nb_grain)
 {
   t_env			*ev;
   stat			*stat_philo;
@@ -27,7 +27,7 @@ t_env	*init(int nb_philo)
       || (stat_philo = malloc(sizeof(stat) * (nb_philo + 1))) == NULL
       || (nb_riz = malloc(sizeof(int) * 1)) == NULL)
     return (NULL);
-  *nb_riz = 12;
+  *nb_riz = nb_grain;
   while (nb < nb_philo)
     {
       pthread_mutex_init(&baguette[nb], NULL);
@@ -61,12 +61,17 @@ int	main(int ac, char **av)
 {
   t_env		*environement;
   pthread_t	*philosopher;
-  int		nb_philo = atoi(av[1]);
+  int		nb_philo;
+  int		nb_grain;
   int		nb = 0;
 
+  if (ac == 1)
+    nb_philo = 7;
+  else if (ac == 2)
+    nb_philo = atoi(av[1]);
   init_termcap();
   if ((philosopher = malloc(sizeof(pthread_t) * (nb_philo + 1))) == NULL
-      || (environement = init(nb_philo)) == NULL)
+      || (environement = init(nb_philo, nb_grain)) == NULL)
     return (-1);
   while (nb <  nb_philo)
     {

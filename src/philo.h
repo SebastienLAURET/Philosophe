@@ -5,7 +5,7 @@
 ** Login   <lauret_s@epitech.net>
 **
 ** Started on  Mon Feb 23 21:35:40 2015 Sebastien Lauret
-** Last update Wed Feb 25 17:58:43 2015 Sebastien Lauret
+** Last update Wed Feb 25 18:15:19 2015 Sebastien Lauret
 */
 
 #ifndef PHILO_H_
@@ -13,7 +13,7 @@
 
 # include <pthread.h>
 
-# define TIME_S 999999
+# define TIME_S 1000000
 
 typedef enum	e_stat
 {

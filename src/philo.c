@@ -5,7 +5,7 @@
 ** Login   <lauret_s@epitech.net>
 **
 ** Started on  Mon Feb 23 21:35:57 2015 Sebastien Lauret
-** Last update Wed Feb 25 18:05:13 2015 Sebastien Lauret
+** Last update Wed Feb 25 18:19:56 2015 Sebastien Lauret
 */
 
 #include <ncurses/curses.h>
@@ -37,11 +37,12 @@ void	philo_sleep(stat *stat_philo,int philo, int nb_philo)
     philo_right = philo + 1;
   stat_philo[philo] = SLEEP;
 
-    pthread_mutex_lock(&tc);
+  pthread_mutex_lock(&tc);
   go_to(0, philo);
   printf("philo %d : SLEEP\n", philo);
+  go_to(0, nb_philo);
   pthread_mutex_unlock(&tc);
-
+  usleep(TIME_S/100);
   while (stat_philo[philo_left] == THINK
 	 || stat_philo[philo_right] == THINK);
 }
@@ -54,6 +55,7 @@ void	philo_eat(pthread_mutex_t *bag_pa, pthread_mutex_t *bag_pn, t_env *philo)
   go_to(0, philo->id_philo);
   printf("philo %d : EAT  \n", philo->id_philo);
   *philo->nb_riz -= 1;
+  go_to(0, philo->nb_philo);
   pthread_mutex_unlock(&tc);
 
   usleep(TIME_S * 2);
@@ -68,6 +70,7 @@ void	philo_think(pthread_mutex_t *b_pa, pthread_mutex_t *b_pn, t_env *philo)
   pthread_mutex_lock(&tc);
   go_to(0, philo->id_philo);
   printf("philo %d : THINK\n", philo->id_philo);
+  go_to(0, philo->nb_philo);
   pthread_mutex_unlock(&tc);
 
   usleep(TIME_S);
@@ -76,8 +79,9 @@ void	philo_think(pthread_mutex_t *b_pa, pthread_mutex_t *b_pn, t_env *philo)
 
   pthread_mutex_lock(&tc);
   go_to(0, philo->id_philo);
-  printf("philo %d : EAT\n", philo->id_philo);
+  printf("philo %d : EAT  \n", philo->id_philo);
   *philo->nb_riz -= 1;
+  go_to(0, philo->nb_philo);
   pthread_mutex_unlock(&tc);
 
   usleep(TIME_S * 2);
