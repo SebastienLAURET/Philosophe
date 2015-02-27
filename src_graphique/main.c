@@ -5,7 +5,7 @@
 ** Login   <rosain_f@epitech.net>
 **
 ** Started on  Sun Feb 22 08:32:03 2015 Francois Rosain
-** Last update Fri Feb 27 10:37:29 2015 Francois Rosain
+** Last update Fri Feb 27 11:58:38 2015 Sebastien Lauret
 */
 
 #include <pthread.h>
@@ -77,7 +77,8 @@ int		main(int ac, char **av)
   gtk_container_add(GTK_CONTAINER(window), hbox);
   while (i < 7)
     {
-      g_images[i] = gtk_image_new_from_file("./src_graphique/images/sleep.png");
+      g_images[i] = gtk_image_new_from_file
+	("./src_graphique/images/sleep.png");
       gtk_widget_set_size_request(g_images[i], 132, 132);
       gtk_box_pack_start(GTK_BOX(hbox), g_images[i], 0, 0, 5);
       i++;

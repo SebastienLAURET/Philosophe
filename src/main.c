@@ -5,7 +5,7 @@
 ** Login   <lauret_s@epitech.net>
 **
 ** Started on  Mon Feb 23 21:36:18 2015 Sebastien Lauret
-** Last update Fri Feb 27 11:23:31 2015 Francois Rosain
+** Last update Fri Feb 27 11:52:58 2015 Sebastien Lauret
 */
 
 #include <stdlib.h>
@@ -14,76 +14,61 @@
 #include <term.h>
 #include "philo.h"
 
-t_env	*init(int nb_philo, int nb_grain)
-{
-  t_env			*ev;
-  stat			*stat_philo;
-  pthread_mutex_t	*baguette;
-  int	*nb_riz;
-  int	nb;
+pthread_mutex_t		*g_baguette;
+stat			*g_stat_philo;
+int			g_nb_riz;
 
-  nb = 0;
-  if ((baguette = malloc(sizeof(pthread_mutex_t) * (nb_philo + 1))) == NULL
-      || (ev = malloc(sizeof(pthread_mutex_t) * (nb_philo + 1))) == NULL
-      || (stat_philo = malloc(sizeof(stat) * (nb_philo + 1))) == NULL
-      || (nb_riz = malloc(sizeof(int) * 1)) == NULL)
+void		*init()
+{
+  int		nb = 0;
+
+  if ((g_baguette = malloc(sizeof(pthread_mutex_t) * (NB_PHILO + 1))) == NULL
+      || (g_stat_philo = malloc(sizeof(stat) * (NB_PHILO + 1))) == NULL)
     return (NULL);
-  *nb_riz = nb_grain;
-  while (nb < nb_philo)
+  while (nb < NB_PHILO)
     {
-      pthread_mutex_init(&baguette[nb], NULL);
-      stat_philo[nb] = SLEEP;
-      ev[nb].baguette = baguette;
-      ev[nb].stat_philo = stat_philo;
-      ev[nb].id_philo = nb;
-      ev[nb].nb_philo = nb_philo - 1;
-      ev[nb].nb_riz = nb_riz;
+      pthread_mutex_init(&g_baguette[nb], NULL);
+      g_stat_philo[nb] = SLEEP;
       nb++;
     }
-  return (ev);
+  g_nb_riz = NB_RIZ;
+  return (malloc(sizeof(pthread_t) * (NB_PHILO + 1)));
 }
-void	free_all(pthread_t *philosopher, t_env *environement)
+
+void		free_all(pthread_t *philosopher)
 {
-  free(environement->baguette);
-  free(environement->stat_philo);
-  free(environement->nb_riz);
-  free(environement);
+  free(g_baguette);
+  free(g_stat_philo);
   free(philosopher);
 }
-void            init_termcap()
+
+void		init_termcap()
 {
-  tgetent(NULL,NULL);
+  tgetent(NULL, NULL);
   putp(tgetstr("cl", NULL));
 }
 
-int	main(int ac, char **av)
+int		main()
 {
-  t_env		*environement;
   pthread_t	*philosopher;
-  int		nb_philo;
-  int		nb_grain;
-  int		nb;
+  int		*nb;
+  int		i;
 
-  nb = 0;
-  if (ac == 1)
-    nb_philo = 7;
-  else if (ac == 2)
-    nb_philo = atoi(av[1]);
   init_termcap();
-  if ((philosopher = malloc(sizeof(pthread_t) * (nb_philo + 1))) == NULL
-      || (environement = init(nb_philo, nb_grain)) == NULL)
+  if ((philosopher = init()) == NULL)
     return (-1);
-  while (nb <  nb_philo)
+  i = -1;
+  while (++i < NB_PHILO)
     {
-      pthread_create(&philosopher[nb], NULL, handle_philosopher, &environement[nb]);
-      nb++;
+      if ((nb = malloc(sizeof(int) * 1)) == NULL)
+	return (-1);
+      *nb = i;
+      pthread_create(&philosopher[i], NULL,
+		     handle_philosopher, nb);
     }
-  nb = 0;
-  while (nb <  nb_philo)
-    {
-      pthread_join(philosopher[nb], NULL);
-      nb++;
-    }
-  free_all(philosopher, environement);
+  i = -1;
+  while (++i < NB_PHILO)
+    pthread_join(philosopher[i], NULL);
+  free_all(philosopher);
   return (0);
 }

@@ -5,7 +5,7 @@
 ** Login   <lauret_s@epitech.net>
 **
 ** Started on  Mon Feb 23 21:35:57 2015 Sebastien Lauret
-** Last update Wed Feb 25 18:19:56 2015 Sebastien Lauret
+** Last update Fri Feb 27 11:54:49 2015 Sebastien Lauret
 */
 
 #include <ncurses/curses.h>
@@ -15,95 +15,73 @@
 #include <stdio.h>
 #include "philo.h"
 
-pthread_mutex_t	tc = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t		tc = PTHREAD_MUTEX_INITIALIZER;
+extern pthread_mutex_t	*g_baguette;
+extern stat		*g_stat_philo;
+extern int		g_nb_riz;
 
-void            go_to(unsigned int x, unsigned int y)
+void		display_stat(int id_philo, char *stat)
 {
-  putp(tgoto(tgetstr("cm", NULL), x, y));
+  putp(tgoto(tgetstr("cm", NULL), 0, 1 + id_philo * 2));
+  printf("philo %d : %s \n", id_philo, stat);
 }
 
-void	philo_sleep(stat *stat_philo,int philo, int nb_philo)
+void	philo_sleep(int id_philo)
 {
   int	philo_left;
   int	philo_right;
 
-  if (philo == 0)
-    philo_left = nb_philo;
+  if (id_philo == 0)
+    philo_left = NB_PHILO;
   else
-    philo_left = philo - 1;
-  if (philo == nb_philo)
+    philo_left = id_philo - 1;
+  if (id_philo == NB_PHILO)
     philo_right = 0;
   else
-    philo_right = philo + 1;
-  stat_philo[philo] = SLEEP;
-
-  pthread_mutex_lock(&tc);
-  go_to(0, philo);
-  printf("philo %d : SLEEP\n", philo);
-  go_to(0, nb_philo);
-  pthread_mutex_unlock(&tc);
-  usleep(TIME_S/100);
-  while (stat_philo[philo_left] == THINK
-	 || stat_philo[philo_right] == THINK);
+    philo_right = id_philo + 1;
+  usleep(TIME_SLEEP);
+  while (g_stat_philo[philo_left] == THINK
+	 || g_stat_philo[philo_right] == THINK);
 }
 
-void	philo_eat(pthread_mutex_t *bag_pa, pthread_mutex_t *bag_pn, t_env *philo)
+void	philo_eat(pthread_mutex_t *bag_pa,
+		  pthread_mutex_t *bag_pn, int id_philo)
 {
-  philo->stat_philo[philo->id_philo] = EAT;
+  g_stat_philo[id_philo] = EAT;
 
   pthread_mutex_lock(&tc);
-  go_to(0, philo->id_philo);
-  printf("philo %d : EAT  \n", philo->id_philo);
-  *philo->nb_riz -= 1;
-  go_to(0, philo->nb_philo);
+  display_stat(id_philo, "EAT  ");
+  g_nb_riz -= 1;
   pthread_mutex_unlock(&tc);
-
-  usleep(TIME_S * 2);
+  usleep(TIME_EAT);
   pthread_mutex_unlock(bag_pa);
   pthread_mutex_unlock(bag_pn);
+  pthread_mutex_lock(&tc);
+  display_stat(id_philo, "SLEEP");
+  g_stat_philo[id_philo] = SLEEP;
+  pthread_mutex_unlock(&tc);
 }
 
-void	philo_think(pthread_mutex_t *b_pa, pthread_mutex_t *b_pn, t_env *philo)
+void	philo_think(pthread_mutex_t *b_pa, pthread_mutex_t *b_pn,
+		    int id_philo, int ind)
 {
-  philo->stat_philo[philo->id_philo] = THINK;
-
+  g_stat_philo[id_philo] = THINK;
   pthread_mutex_lock(&tc);
-  go_to(0, philo->id_philo);
-  printf("philo %d : THINK\n", philo->id_philo);
-  go_to(0, philo->nb_philo);
+  display_stat(id_philo, "THINK");
   pthread_mutex_unlock(&tc);
-
-  usleep(TIME_S);
+  usleep(TIME_THINK);
   pthread_mutex_lock(b_pn);
-  philo->stat_philo[philo->id_philo] = EAT;
-
+  g_stat_philo[id_philo] = EAT;
   pthread_mutex_lock(&tc);
-  go_to(0, philo->id_philo);
-  printf("philo %d : EAT  \n", philo->id_philo);
-  *philo->nb_riz -= 1;
-  go_to(0, philo->nb_philo);
+  ind = !(ind);
+  display_stat(id_philo, "EAT  ");
+   g_nb_riz -= 1;
   pthread_mutex_unlock(&tc);
-
-  usleep(TIME_S * 2);
+   usleep(TIME_EAT);
   pthread_mutex_unlock(b_pn);
   pthread_mutex_unlock(b_pa);
-}
-void	action(pthread_mutex_t *bag_pa, pthread_mutex_t *bag_pn, t_env *philo)
-{
-  int	ret1;
-  int	ret2;
-
-  while (*philo->nb_riz > 0 || 1)
-    {
-      ret1 = pthread_mutex_trylock(bag_pa);
-      ret2 = pthread_mutex_trylock(bag_pn);
-      if (ret1 == 0 && ret2 == 0)
-	philo_eat(bag_pa, bag_pn, philo);
-      else if (ret1 == 0)
-	philo_think(bag_pa, bag_pn, philo);
-      else if (ret2 == 0)
-	philo_think(bag_pn, bag_pa, philo);
-      if (ret1 == 0 || ret2 == 0)
-	return;
-    }
+  pthread_mutex_lock(&tc);
+  display_stat(id_philo, "SLEEP");
+  g_stat_philo[id_philo] = SLEEP;
+  pthread_mutex_unlock(&tc);
 }

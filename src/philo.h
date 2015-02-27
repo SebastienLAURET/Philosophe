@@ -5,7 +5,7 @@
 ** Login   <lauret_s@epitech.net>
 **
 ** Started on  Mon Feb 23 21:35:40 2015 Sebastien Lauret
-** Last update Wed Feb 25 18:15:19 2015 Sebastien Lauret
+** Last update Fri Feb 27 11:43:48 2015 Sebastien Lauret
 */
 
 #ifndef PHILO_H_
@@ -13,29 +13,32 @@
 
 # include <pthread.h>
 
-# define TIME_S 1000000
+# define TIME_SLEEP	10
+# define TIME_THINK	1000000
+# define TIME_EAT	1000000
+
+# define NB_PHILO	7
+# define NB_RIZ		-42
 
 typedef enum	e_stat
-{
-  SLEEP,
-  THINK,
-  EAT
-}		stat;
+  {
+    SLEEP,
+    THINK,
+    EAT
+  }		stat;
 
-typedef struct		s_env{
-  pthread_mutex_t	*baguette;
-  stat			*stat_philo;
-  int			id_philo;
-  int			nb_philo;
-  int			*nb_riz;
-}			t_env;
+void	*init();
+void	free_all(pthread_t *philosopher);
+void	init_termcap();
 
-void	philo_eat(pthread_mutex_t*, pthread_mutex_t*, t_env*);
-void	philo_think(pthread_mutex_t*, pthread_mutex_t*, t_env*);
-void	philo_sleep(stat*,int, int);
-void	action(pthread_mutex_t*, pthread_mutex_t*, t_env*);
+void	display_baguette(int id_philo, int lock);
+void	display_stat(int id_philo, char *stat);
+void	philo_eat(pthread_mutex_t*, pthread_mutex_t*, int);
+void	philo_think(pthread_mutex_t*, pthread_mutex_t*, int, int);
+void	philo_sleep(int);
 
+void	action(pthread_mutex_t*, pthread_mutex_t*, int);
 void	*handle_philosopher(void *args);
-void	handler(pthread_mutex_t*, pthread_mutex_t*, t_env*);
+void	handler(pthread_mutex_t*, pthread_mutex_t*, int);
 
 #endif /* !_PHILO_H_*/
