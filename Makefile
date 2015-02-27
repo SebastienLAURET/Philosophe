@@ -5,7 +5,7 @@
 ## Login   <lauret_s@epitech.net>
 ##
 ## Started on  Mon Feb 23 20:45:08 2015 Sebastien Lauret
-## Last update Wed Feb 25 18:09:32 2015 Sebastien Lauret
+## Last update Fri Feb 27 11:29:54 2015 Francois Rosain
 ##
 
 NAME1	= philo
@@ -17,7 +17,9 @@ FILE1	= src/main.c \
 	  src/handler.c
 
 FILE2	= src_graphique/main.c \
-	  src_graphique/simulator.c
+	  src_graphique/simulator.c \
+	  src_graphique/handler_1.c \
+	  src_graphique/handler_2.c
 
 OBJ1	= $(FILE1:.c=.o)
 
@@ -40,7 +42,7 @@ plus: $(NAME2)
 $(NAME1): $(OBJ1)
 	$(GCC) -o $(NAME1) $(OBJ1) $(CFLAGS)
 
-$(NAME2): $(OBJ2)
+$(NAME2):
 	$(GCC) $(CFLAGS) $(FILE2) -o $(NAME2)
 
 clean:

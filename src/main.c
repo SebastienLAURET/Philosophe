@@ -5,7 +5,7 @@
 ** Login   <lauret_s@epitech.net>
 **
 ** Started on  Mon Feb 23 21:36:18 2015 Sebastien Lauret
-** Last update Wed Feb 25 18:13:34 2015 Sebastien Lauret
+** Last update Fri Feb 27 11:23:31 2015 Francois Rosain
 */
 
 #include <stdlib.h>
@@ -20,8 +20,9 @@ t_env	*init(int nb_philo, int nb_grain)
   stat			*stat_philo;
   pthread_mutex_t	*baguette;
   int	*nb_riz;
-  int	nb = 0;
+  int	nb;
 
+  nb = 0;
   if ((baguette = malloc(sizeof(pthread_mutex_t) * (nb_philo + 1))) == NULL
       || (ev = malloc(sizeof(pthread_mutex_t) * (nb_philo + 1))) == NULL
       || (stat_philo = malloc(sizeof(stat) * (nb_philo + 1))) == NULL
@@ -43,8 +44,6 @@ t_env	*init(int nb_philo, int nb_grain)
 }
 void	free_all(pthread_t *philosopher, t_env *environement)
 {
-  int	nb;
-
   free(environement->baguette);
   free(environement->stat_philo);
   free(environement->nb_riz);
@@ -63,8 +62,9 @@ int	main(int ac, char **av)
   pthread_t	*philosopher;
   int		nb_philo;
   int		nb_grain;
-  int		nb = 0;
+  int		nb;
 
+  nb = 0;
   if (ac == 1)
     nb_philo = 7;
   else if (ac == 2)
