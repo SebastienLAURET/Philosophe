@@ -5,7 +5,7 @@
 ** Login   <lauret_s@epitech.net>
 **
 ** Started on  Mon Feb 23 21:35:57 2015 Sebastien Lauret
-** Last update Fri Feb 27 11:54:49 2015 Sebastien Lauret
+** Last update Fri Feb 27 13:07:43 2015 Sebastien Lauret
 */
 
 #include <ncurses/curses.h>
@@ -22,7 +22,7 @@ extern int		g_nb_riz;
 
 void		display_stat(int id_philo, char *stat)
 {
-  putp(tgoto(tgetstr("cm", NULL), 0, 1 + id_philo * 2));
+  putp(tgoto(tgetstr("cm", NULL), 0, id_philo));
   printf("philo %d : %s \n", id_philo, stat);
 }
 

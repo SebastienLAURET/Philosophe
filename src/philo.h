@@ -5,7 +5,7 @@
 ** Login   <lauret_s@epitech.net>
 **
 ** Started on  Mon Feb 23 21:35:40 2015 Sebastien Lauret
-** Last update Fri Feb 27 11:43:48 2015 Sebastien Lauret
+** Last update Fri Feb 27 13:09:07 2015 Sebastien Lauret
 */
 
 #ifndef PHILO_H_
@@ -13,7 +13,7 @@
 
 # include <pthread.h>
 
-# define TIME_SLEEP	10
+# define TIME_SLEEP	0
 # define TIME_THINK	1000000
 # define TIME_EAT	1000000
 

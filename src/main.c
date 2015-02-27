@@ -5,7 +5,7 @@
 ** Login   <lauret_s@epitech.net>
 **
 ** Started on  Mon Feb 23 21:36:18 2015 Sebastien Lauret
-** Last update Fri Feb 27 11:52:58 2015 Sebastien Lauret
+** Last update Fri Feb 27 13:06:45 2015 Sebastien Lauret
 */
 
 #include <stdlib.h>
@@ -22,7 +22,8 @@ void		*init()
 {
   int		nb = 0;
 
-  if ((g_baguette = malloc(sizeof(pthread_mutex_t) * (NB_PHILO + 1))) == NULL
+  if (NB_PHILO > 30
+      || (g_baguette = malloc(sizeof(pthread_mutex_t) * (NB_PHILO + 1))) == NULL
       || (g_stat_philo = malloc(sizeof(stat) * (NB_PHILO + 1))) == NULL)
     return (NULL);
   while (nb < NB_PHILO)
