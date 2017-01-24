@@ -1,0 +1,7 @@
+// tmp file
+*~
+*.o
+
+// exec
+philo
+philo_graph
