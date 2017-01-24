@@ -8,7 +8,7 @@
 ** Last update Fri Feb 27 13:07:43 2015 Sebastien Lauret
 */
 
-#include <ncurses/curses.h>
+#include <curses.h>
 #include <term.h>
 #include <unistd.h>
 #include <pthread.h>

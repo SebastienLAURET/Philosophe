@@ -10,7 +10,7 @@
 
 #include <stdlib.h>
 #include <pthread.h>
-#include <ncurses/curses.h>
+#include <curses.h>
 #include <term.h>
 #include "philo.h"
 
