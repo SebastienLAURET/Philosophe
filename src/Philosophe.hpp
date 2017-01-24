@@ -14,17 +14,16 @@ public:
     SLEEP
   };
 
-  Philosophe(std::pair<std::mutex&, std::mutex&> &bag,
-             std::pair<Philosophe&, Philosophe&> &philo,
+  Philosophe(std::mutex&, std::mutex&,
              int id, Display &disp);
   ~Philosophe();
 
   void          operator()();
   e_state       getState();
+  void          setPhiloG(Philosophe *philo);
+  void          setPhiloD(Philosophe *philo);
   static void   trampoline(Philosophe &);
 private:
-  typedef std::pair<Philosophe&,Philosophe&> philoPaire;
-  typedef std::pair<std::mutex&,std::mutex&> paireBag;
   void          think(bool);
   void          eat();
   void          sleep();
@@ -33,8 +32,8 @@ private:
   std::mutex    &_baguetteG;
   std::mutex    &_baguetteD;
 
-  Philosophe    &_philoG;
-  Philosophe    &_philoD;
+  Philosophe    *_philoG;
+  Philosophe    *_philoD;
 
   e_state       _state;
   int           _id;

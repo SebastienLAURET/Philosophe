@@ -7,11 +7,9 @@
 /*
 **  constructor
 */
-Philosophe::Philosophe(std::pair<std::mutex&, std::mutex&> &bag,
-           std::pair<Philosophe&, Philosophe&> &philo,
-           int id, Display &disp)
-: _baguetteG(bag.first), _baguetteD(bag.second),
-  _philoG(philo.first), _philoD(philo.second),
+Philosophe::Philosophe(std::mutex &bagG, std::mutex &bagD,
+                      int id, Display &disp)
+: _baguetteG(bagG), _baguetteD(bagD),
   _state(SLEEP), _id(id), _disp(disp) {
 
 }
@@ -38,6 +36,15 @@ void      Philosophe::operator()() {
 Philosophe::e_state   Philosophe::getState() {
   return this->_state;
 }
+
+void      Philosophe::setPhiloG(Philosophe *philo) {
+  this->_philoG = philo;
+}
+
+void      Philosophe::setPhiloD(Philosophe *philo) {
+  this->_philoD = philo;
+}
+
 
 void      Philosophe::trampoline(Philosophe &philo) {
 //  Philosophe &philo = *self;
@@ -71,8 +78,8 @@ void      Philosophe::eat () {
 void      Philosophe::sleep() {
   this->_state = SLEEP;
 
-  while (this->_philoG.getState() == THINK
-        && this->_philoD.getState() == THINK);
+  while (this->_philoG->getState() == THINK
+        && this->_philoD->getState() == THINK);
 }
 
 void      Philosophe::displayState() {
