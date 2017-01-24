@@ -1,0 +1,3 @@
+[submodule "src/argparse"]
+	path = src/argparse
+	url = git@github.com:hbristow/argparse.git
