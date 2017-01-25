@@ -3,9 +3,10 @@
 
 #include <thread>
 #include <mutex>
+#include <sstream>
 #include "Display.hpp"
 
-class Philosophe : public std::thread {
+class Philosophe {
 
 public:
   enum e_state {
@@ -19,10 +20,12 @@ public:
   ~Philosophe();
 
   void          operator()();
+  void          run();
+  void          join();
   e_state       getState();
   void          setPhiloG(Philosophe *philo);
   void          setPhiloD(Philosophe *philo);
-  static void   trampoline(Philosophe &);
+  static void   trampoline(Philosophe*);
 private:
   void          think(bool);
   void          eat();
@@ -38,6 +41,7 @@ private:
   e_state       _state;
   int           _id;
   Display       &_disp;
+  std::thread   _thread;
 };
 
 #endif //PHILOSOPHE_HPP

@@ -23,5 +23,14 @@ Handler::~Handler() {
 }
 
 void Handler::run() {
+  for (size_t iter = 0; iter < _bag.size(); iter += 2) {
+    _philos[iter]->run();
+  }
+  for (size_t iter = 1; iter < _bag.size(); iter += 2) {
+    _philos[iter]->run();
+  }
+  for (size_t iter = 0; iter < _bag.size(); iter++) {
+    _philos[iter]->join();
+  }
 
 }

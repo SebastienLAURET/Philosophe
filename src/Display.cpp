@@ -9,7 +9,7 @@ Display::~Display() {
 
 }
 
-void Display::print(int id, std::string &str) {
+void Display::print(int id, std::string const &str) {
   this->_mtx.lock();
   putp(tgoto(tgetstr("cm", NULL), 0, id));
   std::cout << str << std::endl;

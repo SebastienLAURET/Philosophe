@@ -11,7 +11,7 @@ public:
     Display();
     ~Display();
 
-    void print(int, std::string&);
+    void print(int, std::string const &);
 
 private:
     std::mutex  _mtx;
