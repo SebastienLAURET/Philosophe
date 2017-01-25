@@ -11,16 +11,16 @@
 NAME	= philo
 
 FILE	= src/Display.cpp \
-			src/Handler.cpp \
-			src/main.cpp \
-			src/Philosophe.cpp
+	src/Handler.cpp \
+	src/main.cpp \
+	src/Philosophe.cpp
 
 
-OBJ	= $(FILE:.c=.o)
+OBJ	= $(FILE:.cpp=.o)
 
 GCC	= g++
 
-CFLAGS	+= -std=c++11 -lncurses -pthread  #-W -Wall -Wextra
+CPPFLAGS	+= -std=c++11 -lncurses -pthread  #-W -Wall -Wextra
 
 RM	= rm -f
 
@@ -28,7 +28,7 @@ all: $(NAME)
 
 
 $(NAME): $(OBJ)
-	$(GCC) -o $(NAME) $(OBJ) $(CFLAGS)
+	$(GCC) -o $(NAME) $(OBJ) $(CPPFLAGS)
 
 clean:
 	$(RM) $(OBJ)
