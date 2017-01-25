@@ -20,7 +20,7 @@ OBJ	= $(FILE:.c=.o)
 
 GCC	= g++
 
-CFLAGS	+= -lncurses -pthread  #-W -Wall -Wextra
+CFLAGS	+= -std=c++11 -lncurses -pthread  #-W -Wall -Wextra
 
 RM	= rm -f
 
