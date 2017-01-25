@@ -10,15 +10,17 @@
 
 NAME	= philo
 
-FILE	= src/main.c \
-	  src/philo.c \
-	  src/handler.c
+FILE	= src/Display.cpp \
+			src/Handler.cpp \
+			src/main.cpp \
+			src/Philosophe.cpp
+
 
 OBJ	= $(FILE:.c=.o)
 
-GCC	= gcc
+GCC	= g++
 
-CFLAGS	+= -lncurses -pthread -W -Wall -Wextra
+CFLAGS	+= -lncurses -pthread  #-W -Wall -Wextra
 
 RM	= rm -f
 
