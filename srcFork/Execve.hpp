@@ -1,25 +1,21 @@
 
 #ifndef EXECVE_HPP
 # define EXECVE_HPP
-# include <unistd.h>
+
+#include <string>
+#include <vector>
+#include <list>
+#include <unistd.h>
 
 class Execve {
 private:
-  char *_envp[];
-  char *_argv[];
+  char **_env;
 
 public:
-  Execve(char *env[], char *argv[]) {
-    _env = env;
-    _argv = argv;
-  }
+  Execve(char **env);
+  ~Execve();
 
-  ~Execve(){
-  }
-
-  void run(const std::string filename){
-    execve(filename.c_str(), _argv, _envp);
-  }
+  void run(const std::string &filename, std::list<std::string> *argVector = NULL);
 };
 
 #endif //!EXECVE_HPP
