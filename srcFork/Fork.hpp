@@ -15,7 +15,7 @@ public:
 
   bool  isChildProcess();
   int   getPID();
-  int   wait(int);
+  int   wait();
   bool  killChild();
 
 private:

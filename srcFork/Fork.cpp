@@ -21,10 +21,10 @@ int   Fork::getPID() {
   return _childPID;
 }
 
-int  Fork::wait(int options) {
+int  Fork::wait() {
   if (!isChildProcess()) {
     int status = 0;
-    if (waitpid(_childPID, &status, options) == -1);
+    if (waitpid(_childPID, &status, 0) == -1);
       return -1;
     return WEXITSTATUS(status);
   }
