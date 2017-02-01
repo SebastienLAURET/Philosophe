@@ -15,7 +15,7 @@ public:
   Execve(char **env);
   ~Execve();
 
-  void run(const std::string &filename, std::list<std::string> *argVector = NULL);
+  void operator()(const std::string &filename, std::list<std::string> *argVector = NULL);
 };
 
 #endif //!EXECVE_HPP

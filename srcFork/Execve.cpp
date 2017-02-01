@@ -7,7 +7,7 @@ Execve::Execve(char **env) {
 Execve::~Execve(){
 }
 
-void Execve::run(const std::string &filename, std::list<std::string> *argVector){
+void Execve::operator()(const std::string &filename, std::list<std::string> *argVector){
   char **args = new char*[argVector->size()];
   int i = 0;
   for (auto arg : (*argVector)) {

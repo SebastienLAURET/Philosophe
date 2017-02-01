@@ -1,6 +1,11 @@
 #ifndef SEMAPHORE_HPP
 # define SEMAPHORE_HPP
-# define ID_PROJECT 'P';
+
+#include <sys/types.h>
+#include <sys/ipc.h>
+#include <sys/sem.h>
+
+#define ID_PROJECT 'P'
 
 class Semaphore {
 private:
@@ -9,21 +14,10 @@ private:
   int     _semId;
 
 public:
-  Semaphore() {
-    _key = ftok(".", ID_PROJECT);
-    _semId = semget(_key, 1, IPC_CREATE | IPC_EXCL | 0666);
-    semctl(_semId, 0, SET_VAL, 1);
-  }
-  ~Semaphore() {
-    semctl(_semId, 0, IPC_RMID, 0);
-  }
+  Semaphore();
+  ~Semaphore();
 
-  void op(int seim_num, int sem_op, int sem_flg) {
-      _op.sem_num = sem_num;
-      _op.sem_op = sem_op;
-      _op.sem_flg = sem_flg;
-      semop(_semId, &op, 1);
-    }
+  void operator()(int seim_num, int sem_op, int sem_flg);
 };
 
 #endif //!SEMAPHORE_HPP
