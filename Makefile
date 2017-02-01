@@ -1,12 +1,3 @@
-##
-## Makefile for MAKEFILE in /home/lauret_s/rendu/PSU_2014_philo
-##
-## Made by Sebastien Lauret
-## Login   <lauret_s@epitech.net>
-##
-## Started on  Mon Feb 23 20:45:08 2015 Sebastien Lauret
-## Last update Fri Feb 27 11:29:54 2015 Francois Rosain
-##
 
 NAME	= philo
 
