@@ -11,6 +11,7 @@ private:
 public:
   Execve(char *env[], char *argv[]) {
     _env = env;
+    _argv = argv;
   }
 
   ~Execve(){
