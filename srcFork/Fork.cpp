@@ -1,22 +1,40 @@
 #include "Fork.hpp"
 
 Fork::Fork() {
-
+  _childPID = 0;
 }
 
 Fork::~Fork() {
-
+  killChild();
 }
 
-bool  operator()() {
+bool  Fork::operator()() {
   _childPID = fork();
   return (_childPID >= 0);
 }
 
-bool  isChildProcess() {
-  return (pid == 0)
+bool  Fork::isChildProcess() {
+  return (_childPID == 0);
 }
 
-int   getPID() {
+int   Fork::getPID() {
   return _childPID;
+}
+
+int  Fork::wait(int options) {
+  if (!isChildProcess()) {
+    int status = 0;
+    if (waitpid(_childPID, &status, options) == -1);
+      return -1;
+    return WEXITSTATUS(status);
+  }
+  return 0;
+}
+
+bool Fork::killChild() {
+  if (!isChildProcess() && _childPID > 0) {
+    kill(_childPID, 9);
+    _childPID = 0;
+  }
+  return false;
 }
