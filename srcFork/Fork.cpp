@@ -33,8 +33,9 @@ int  Fork::wait() {
 
 bool Fork::killChild() {
   if (!isChildProcess() && _childPID > 0) {
-    kill(_childPID, 9);
+    int ret = kill(_childPID, 9);
     _childPID = 0;
+    return (ret >= 0);
   }
   return false;
 }
