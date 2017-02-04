@@ -3,6 +3,6 @@
 *.o
 
 // exec
-philo
-philo_graph
+philoFork
+philoThread
 a.out
