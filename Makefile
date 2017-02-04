@@ -11,10 +11,10 @@ OBJ1	= $(FILE1:.cpp=.o)
 
 NAME2	= philoFork
 
-FILE2	= srcFork/MsgQueue.cpp \
-	srcFork/Semaphore.cpp \
-	srcFork/Fork.cpp \
-	srcFork/mainTable.cpp
+FILE2	= srcFork/Abstaction/MsgQueue.cpp \
+			srcFork/Abstaction/Semaphore.cpp \
+			srcFork/Abstaction/Fork.cpp \
+			srcFork/mainTable.cpp
 
 
 OBJ2	= $(FILE2:.cpp=.o)
@@ -22,7 +22,7 @@ OBJ2	= $(FILE2:.cpp=.o)
 
 GCC	= g++
 
-CPPFLAGS	+= -std=c++11 -lncurses -pthread  #-W -Wall -Wextra
+CPPFLAGS	+= -std=c++11 -lncurses -pthread -I srcFork/Abstaction/  #-W -Wall -Wextra
 
 RM	= rm -f
 
