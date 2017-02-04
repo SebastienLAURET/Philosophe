@@ -4,7 +4,7 @@
 #include "Semaphore.hpp"
 #include "MsgQueue.hpp"
 
-int main(int argc, char const *argv[]) {
+int main() {
   Fork  forkObj;
   MsgQueue  msgQObj;
 
@@ -16,10 +16,10 @@ int main(int argc, char const *argv[]) {
       return 1;
     }
     int i = 0;
-    //while (i < 10) {
+    while (i < 10) {
       msgQObj.send("hello word", 11, 0);
-  //    ++i;
-  //  }
+      ++i;
+    }
   } else {
     Semaphore semObj;
     if (!msgQObj.isOpen()) {

@@ -1,6 +1,6 @@
 #include "Handler.hpp"
 
-int main(int ac, char **av) {
+int main() {
   Handler tets(10);
 
   tets.run();

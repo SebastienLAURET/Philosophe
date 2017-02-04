@@ -24,7 +24,7 @@ int   Fork::getPID() {
 int  Fork::wait() {
   if (!isChildProcess()) {
     int status = 0;
-    if (waitpid(_childPID, &status, 0) == -1);
+    if (waitpid(_childPID, &status, 0) == -1)
       return -1;
     return WEXITSTATUS(status);
   }

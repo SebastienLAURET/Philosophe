@@ -22,7 +22,7 @@ OBJ2	= $(FILE2:.cpp=.o)
 
 GCC	= g++
 
-CPPFLAGS	+= -std=c++11 -lncurses -pthread -I srcFork/Abstaction/  #-W -Wall -Wextra
+CPPFLAGS	+= -std=c++11 -lncurses -pthread -I srcFork/Abstaction/  -W -Wall -Wextra
 
 RM	= rm -f
 
