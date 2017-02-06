@@ -11,11 +11,11 @@
 
 class MsgQueue {
 public:
-  MsgQueue();
+  MsgQueue(std::string &path, int flag = (SHM_R | SHM_W));
   ~MsgQueue();
 
   bool  isOpen();
-  bool  init(std::string &path);
+  bool  init(std::string &path, int flag = (SHM_R | SHM_W));
   int   send(const void *msgp, size_t msgsz, int msgflg);
   int   receve(void *msgp, size_t msgsz, long msgtyp, int msgflg);
   bool  close();

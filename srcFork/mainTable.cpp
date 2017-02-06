@@ -2,39 +2,32 @@
 #include <cstring>
 #include "Fork.hpp"
 #include "Semaphore.hpp"
-#include "MsgQueue.hpp"
-
+#include "MsgHandler.hpp"
+#include <unistd.h>
 int main() {
-  Fork  forkObj;
-  MsgQueue  msgQObj;
+  std::string path1("./philo1"), path2("./philo2");
 
-  forkObj();
-  if (forkObj.isChildProcess()) {
-    Semaphore semObj;
-    if (!msgQObj.isOpen()) {
-      std::cerr << "Error :: MsgQueue" << std::endl;
-      return 1;
-    }
-    int i = 0;
-    while (i < 10) {
-      msgQObj.send("hello word", 11, 0);
-      ++i;
-    }
+  Fork f;
+  f();
+  if (f.isChildProcess()) {
+    MsgHandler msgHand(path1, path2);
+    msgHand.queueW.push(std::string("tototototo"));
+    msgHand.queueW.push(std::string("tititititi"));
+    sleep(1);
+    msgHand.close();
+    msgHand.join();
   } else {
-    Semaphore semObj;
-    if (!msgQObj.isOpen()) {
-      std::cerr << "Error :: MsgQueue" << std::endl;
-      return 1;
+    MsgHandler msgHand(path2, path1);
+  //  sleep(1);
+    while (msgHand.queueR.size()) {
+      std::string str = msgHand.queueR.front();
+      msgHand.queueR.pop();
+      std::cout << str << '\n';
     }
-    char *test;
-    test = new char[11];
-    int ret  = 0;
-    while (ret >= 0) {
-      std::memset(test, 0, 11);
-      ret = msgQObj.receve(test, 11, 0, 0);
-      std::cout << ret  <<">>" << test << std::endl;
-    }
-    delete test;
+    msgHand.close();
+    msgHand.join();
+
+    f.wait();
   }
   return 0;
 }
