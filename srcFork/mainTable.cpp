@@ -18,7 +18,7 @@ int main() {
     msgHand.join();
   } else {
     MsgHandler msgHand(path2, path1);
-  //  sleep(1);
+    sleep(1);
     while (msgHand.queueR.size()) {
       std::string str = msgHand.queueR.front();
       msgHand.queueR.pop();

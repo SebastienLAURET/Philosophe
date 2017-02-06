@@ -16,7 +16,7 @@ bool MsgQueue::init(std::string &path, int flag) {
   key_t key = ftok(path.c_str(),0);
   _msgId = msgget(key, flag);
   if (_msgId == -1) {
-    _msgId = msgget(key, IPC_CREAT | flag);
+    _msgId = msgget(key, IPC_CREAT | SHM_R | SHM_W);
   }
   std::cout << _msgId << std::endl;
   return isOpen();
