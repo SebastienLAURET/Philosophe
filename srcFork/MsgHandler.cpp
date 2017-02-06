@@ -39,7 +39,6 @@ void MsgHandler::_receve() {
 
     std::memset(strTmp, 0, 11);
     while ((ret = _msgQObjR.receve(strTmp, 11, 0, IPC_NOWAIT)) > 0) {
-      std::cout << "receve" << strTmp << std::endl;
       queueR.push(std::string(strTmp, 11));
       std::memset(strTmp, 0, 11);
     }
@@ -51,11 +50,9 @@ void MsgHandler::_send() {
     std::cerr << "Error : <MsgHandler::_receve> Msg Queue isn't open" << std::endl;
     return;
   }
-  std::cout << "size  :: " << queueW.size() << std::endl;
   while (queueW.size()) {
     std::string str = queueW.front();
     queueW.pop();
-    std::cout << "send" << str << '\n'
-      << "ret " << _msgQObjW.send(str.c_str(), 11, 0)<< std::endl;
+    _msgQObjW.send(str.c_str(), 11, 0);
   }
 }

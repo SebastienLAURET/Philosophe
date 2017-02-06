@@ -18,7 +18,6 @@ bool MsgQueue::init(std::string &path, int flag) {
   if (_msgId == -1) {
     _msgId = msgget(key, IPC_CREAT | SHM_R | SHM_W);
   }
-  std::cout << _msgId << std::endl;
   return isOpen();
 }
 
