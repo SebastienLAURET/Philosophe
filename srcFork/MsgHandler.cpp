@@ -1,9 +1,9 @@
-
+#include <unistd.h>
 #include "MsgHandler.hpp"
 
 MsgHandler::MsgHandler(std::string &path1, std::string &path2)
 : std::thread(MsgHandler::trampoline, this),
- _msgQObjR(path1, SHM_R), _msgQObjW(path2, SHM_W) {
+  _endFlag(false), _msgQObjR(path1, SHM_R), _msgQObjW(path2, SHM_W) {
 
 }
 
@@ -12,16 +12,17 @@ MsgHandler::~MsgHandler() {
 }
 
 void MsgHandler::operator()() {
-  _endFlag = true;
-
-  while (_endFlag) {
+  while (!_endFlag) {
     _receve();
     _send();
+    usleep(100000);
+    std::cout << "flag : " << _endFlag << std::endl;
   }
 }
 
 void MsgHandler::close() {
-  _endFlag = false;
+  _endFlag = true;
+  std::cout << "endFlag :" << _endFlag << std::endl;
 }
 
 void MsgHandler::trampoline(MsgHandler *tmp){
@@ -30,19 +31,19 @@ void MsgHandler::trampoline(MsgHandler *tmp){
 
 
 void MsgHandler::_receve() {
-    if (!_msgQObjR.isOpen()) {
-      std::cerr << "Error : <MsgHandler::_receve> Msg Queue isn't open" << std::endl;
-      return;
-    }
-    int ret;
-    char *strTmp = new char[11];
+  if (!_msgQObjR.isOpen()) {
+    std::cerr << "Error : <MsgHandler::_receve> Msg Queue isn't open" << std::endl;
+    return;
+  }
+  int ret;
+  char *strTmp = new char[11];
 
+  std::memset(strTmp, 0, 11);
+  while ((ret = _msgQObjR.receve(strTmp, 11, 0, IPC_NOWAIT)) > 0) {
+    queueR.push(std::string(strTmp, 11));
     std::memset(strTmp, 0, 11);
-    while ((ret = _msgQObjR.receve(strTmp, 11, 0, IPC_NOWAIT)) > 0) {
-      queueR.push(std::string(strTmp, 11));
-      std::memset(strTmp, 0, 11);
-    }
-    delete strTmp;
+  }
+  delete strTmp;
 }
 
 void MsgHandler::_send() {

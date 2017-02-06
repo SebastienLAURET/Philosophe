@@ -10,24 +10,31 @@ int main() {
   Fork f;
   f();
   if (f.isChildProcess()) {
-    MsgHandler msgHand(path1, path2);
+    MsgHandler  msgHand(path1, path2);
+    Semaphore   sem;
+
     msgHand.queueW.push(std::string("tototototo"));
     msgHand.queueW.push(std::string("tititititi"));
-    sleep(1);
+    //sleep(1);
+  //  sem(0, 1, 0);
     msgHand.close();
+    std::cout << "close child" << '\n';
     msgHand.join();
+    std::cout << "join child" << '\n';
   } else {
     MsgHandler msgHand(path2, path1);
-    sleep(1);
+    Semaphore   sem;
+
+  //  sem(0, -1, 0);
     while (msgHand.queueR.size()) {
       std::string str = msgHand.queueR.front();
       msgHand.queueR.pop();
       std::cout << str << '\n';
     }
     msgHand.close();
+    std::cout << "close " << '\n';
     msgHand.join();
-
-    f.wait();
+    std::cout << "join " << '\n';
   }
   return 0;
 }

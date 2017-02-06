@@ -1,8 +1,10 @@
 #include "Semaphore.hpp"
 
 Semaphore::Semaphore() {
-  _key = ftok(".", ID_PROJECT);
-  _semId = semget(_key, 1, IPC_CREAT | IPC_EXCL | 0666);
+  _key = ftok(".", 0);
+  if ((_semId = semget(_key, 1, SHM_R | SHM_W)) > 0) {
+    _semId = semget(_key, 1, IPC_CREAT | IPC_EXCL | 0666);
+  }
   semctl(_semId, 0, SETVAL, 1);
 }
 

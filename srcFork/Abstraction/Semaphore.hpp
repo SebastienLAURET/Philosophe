@@ -4,8 +4,7 @@
 #include <sys/types.h>
 #include <sys/ipc.h>
 #include <sys/sem.h>
-
-#define ID_PROJECT 'P'
+#include <sys/shm.h>
 
 class Semaphore {
 private:

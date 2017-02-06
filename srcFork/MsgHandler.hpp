@@ -5,6 +5,7 @@
 #include <thread>
 #include <cstring>
 #include <queue>
+#include <atomic>
 #include "MsgQueue.hpp"
 
 class MsgHandler : public std::thread {
@@ -22,7 +23,7 @@ private:
   void            _receve();
   void            _send();
 
-  volatile bool _endFlag;
+  std::atomic<bool> _endFlag;
   MsgQueue      _msgQObjR;
   MsgQueue      _msgQObjW;
 
