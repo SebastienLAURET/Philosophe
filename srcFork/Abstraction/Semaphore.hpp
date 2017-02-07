@@ -16,6 +16,9 @@ public:
   Semaphore();
   ~Semaphore();
 
+  void lock(int);
+  void unlock(int);
+  bool tryLock(int);
   int operator()(int seim_num, int sem_op, int sem_flg);
 };
 

@@ -14,6 +14,22 @@ Semaphore::~Semaphore() {
   semctl(_semId, 0, IPC_RMID, 0);
 }
 
+void Semaphore::lock(int sem_num){
+    (*this)(sem_num, -1, SEM_UNDO);
+}
+
+void Semaphore::unlock(int sem_num){
+  (*this)(sem_num, 1, SEM_UNDO);
+}
+
+bool Semaphore::tryLock(int sem_num) {
+  if (semctl(_semId, sem_num, GETVAL) > 0) {
+    unlock(sem_num);
+    return true;
+  }
+  return false;
+}
+
 int Semaphore::operator()(int sem_num, int sem_op, int sem_flg) {
     _op.sem_num = sem_num;
     _op.sem_op = sem_op;
