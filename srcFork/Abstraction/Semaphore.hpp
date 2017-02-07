@@ -16,7 +16,7 @@ public:
   Semaphore();
   ~Semaphore();
 
-  void operator()(int seim_num, int sem_op, int sem_flg);
+  int operator()(int seim_num, int sem_op, int sem_flg);
 };
 
 #endif //!SEMAPHORE_HPP

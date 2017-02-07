@@ -15,14 +15,11 @@ void MsgHandler::operator()() {
   while (!_endFlag) {
     _receve();
     _send();
-    usleep(100000);
-    std::cout << "flag : " << _endFlag << std::endl;
   }
 }
 
 void MsgHandler::close() {
   _endFlag = true;
-  std::cout << "endFlag :" << _endFlag << std::endl;
 }
 
 void MsgHandler::trampoline(MsgHandler *tmp){

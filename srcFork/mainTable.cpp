@@ -16,16 +16,18 @@ int main() {
     msgHand.queueW.push(std::string("tototototo"));
     msgHand.queueW.push(std::string("tititititi"));
     //sleep(1);
-  //  sem(0, 1, 0);
+    //sem(0, 1, 0);
+    std::cout << sem(0, 1, SEM_UNDO)<< std::endl;
     msgHand.close();
     std::cout << "close child" << '\n';
     msgHand.join();
     std::cout << "join child" << '\n';
   } else {
+
     MsgHandler msgHand(path2, path1);
     Semaphore   sem;
-
-  //  sem(0, -1, 0);
+//    std::cout << sem(0, 1, 0)<< std::endl;
+    std::cout << sem(0, -1, SEM_UNDO)<< std::endl;
     while (msgHand.queueR.size()) {
       std::string str = msgHand.queueR.front();
       msgHand.queueR.pop();
