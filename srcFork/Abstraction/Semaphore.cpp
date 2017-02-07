@@ -2,7 +2,7 @@
 #include "Semaphore.hpp"
 
 Semaphore::Semaphore() {
-  _key = ftok("./", 'd');
+  _key = ftok("./", 0);
   if ((_semId = semget(_key, 1, SHM_R | SHM_W)) <= 0) {
     _semId = semget(_key, 1, IPC_CREAT | SHM_R | SHM_W);
     semctl(_semId, 0, SETALL, 1);
