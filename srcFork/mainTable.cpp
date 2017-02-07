@@ -15,13 +15,11 @@ int main() {
 
     msgHand.queueW.push(std::string("tototototo"));
     msgHand.queueW.push(std::string("tititititi"));
-    //sleep(1);
+    sleep(1);
     //sem(0, 1, 0);
     std::cout << sem(0, 1, SEM_UNDO)<< std::endl;
     msgHand.close();
-    std::cout << "close child" << '\n';
     msgHand.join();
-    std::cout << "join child" << '\n';
   } else {
 
     MsgHandler msgHand(path2, path1);
@@ -34,9 +32,7 @@ int main() {
       std::cout << str << '\n';
     }
     msgHand.close();
-    std::cout << "close " << '\n';
     msgHand.join();
-    std::cout << "join " << '\n';
   }
   return 0;
 }
