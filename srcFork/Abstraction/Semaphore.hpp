@@ -11,7 +11,8 @@ private:
   sembuf  _op;
   key_t   _key;
   int     _semId;
-  int     _nb;
+  size_t  _nb;
+
 public:
   Semaphore(int nb);
   ~Semaphore();
