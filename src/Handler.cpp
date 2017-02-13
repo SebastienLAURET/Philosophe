@@ -10,7 +10,7 @@ Handler::Handler(int nb)
                                   iter, _disp);
   }
   for (int iter = 0; iter < nb; iter++) {
-    _philos[iter]->setPhiloG(_philos[(iter - 1)% nb]);
+    _philos[iter]->setPhiloG(_philos[((iter - 1) < 0)? nb -1 : iter -1]);
     _philos[iter]->setPhiloD(_philos[(iter + 1)% nb]);
   }
 }
