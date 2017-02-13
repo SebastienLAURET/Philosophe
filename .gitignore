@@ -3,6 +3,7 @@
 *.o
 
 // exec
-philoFork
+launcher
+philo
 philoThread
 a.out

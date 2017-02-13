@@ -9,16 +9,24 @@ FILE1	= src/Display.cpp 	\
 
 OBJ1	= $(FILE1:.cpp=.o)
 
-NAME2	= philoFork
+NAME2	= launcher
 
 FILE2	= srcFork/Abstraction/Semaphore.cpp 	\
 				srcFork/Abstraction/Fork.cpp	 			\
 				srcFork/Abstraction/Execve.cpp	 		\
-				srcFork/Philosophe.cpp							\
 				srcFork/mainTable.cpp
 
 
 OBJ2	= $(FILE2:.cpp=.o)
+
+NAME3	= philo
+
+FILE3	= srcFork/Abstraction/Semaphore.cpp 	\
+				srcFork/Philosophe.cpp							\
+				srcFork/main.c
+
+
+OBJ3	= $(FILE3:.cpp=.o)
 
 
 GCC	= g++
@@ -27,14 +35,21 @@ CPPFLAGS	+= -W -Wall -Wextra -std=c++11 -lncurses -pthread -I ./srcFork/Abstract
 
 RM	= rm -f
 
-all: $(NAME1) $(NAME2)
+all: thread fork
 
+thread: $(NAME1)
+
+fork: $(NAME2) $(NAME3)
 
 $(NAME1): $(OBJ1)
 	$(GCC) -o $(NAME1) $(OBJ1) $(CPPFLAGS)
 
 $(NAME2): $(OBJ2)
 	$(GCC) -o $(NAME2) $(OBJ2) $(CPPFLAGS)
+
+$(NAME3): $(OBJ3)
+	$(GCC) -o $(NAME3) $(OBJ3) $(CPPFLAGS)
+
 
 fclean:
 	$(RM) $(OBJ1) $(OBJ2)

@@ -26,7 +26,7 @@ int main(int ac, char *av[], char *env[]) {
       tmp.push_back(std::to_string(i));
       Execve exec(env);
 
-      exec("./a.out", &tmp);
+      exec("./philo", &tmp);
       break;
     }
   }
@@ -37,7 +37,7 @@ int main(int ac, char *av[], char *env[]) {
     //  sleep(1);
     }
 //  }
-std::cout << "size " << fList.size() << '\n';
+  std::cout << "size " << fList.size() << '\n';
 
   while (fList.size()) {
     std::cout << "wait "<< '\n';
