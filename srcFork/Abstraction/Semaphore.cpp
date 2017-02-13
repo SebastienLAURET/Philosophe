@@ -6,9 +6,12 @@ Semaphore::Semaphore(int nb) {
   _nb = nb;
   if ((_semId = semget(_key, _nb, SHM_R | SHM_W)) <= 0) {
     _semId = semget(_key, _nb, IPC_CREAT | SHM_R | SHM_W);
-    semctl(_semId, 0, SETALL, 1);
+    for (size_t i = 0; i < _nb; i++) {
+      /* code */
+      semctl(_semId, i, SETVAL, 1);
+    }
   }
-  std::cout << "id Sem :"<< _key << " " <<_semId<< '\n';
+  std::cout << "id Sem :"<< _key << " " << _semId << '\n';
 }
 
 Semaphore::~Semaphore() {
@@ -27,8 +30,9 @@ void Semaphore::unlock(int sem_num){
 }
 
 bool Semaphore::tryLock(int sem_num) {
+//  std::cout << "Try sem : "<< sem_num << "  "<< semctl(_semId, sem_num, GETVAL) << std::endl;
   if (semctl(_semId, sem_num, GETVAL) > 0) {
-    unlock(sem_num);
+    lock(sem_num);
     return true;
   }
   return false;

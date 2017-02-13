@@ -4,12 +4,12 @@
 #include <atomic>
 #include <csignal>
 
-std::atomic<bool> flag_g;
+std::atomic<bool> flagExit_g;
 
 class SignalHandler {
 public:
   SignalHandler() {
-    flag_g = false;
+    flagExit_g = false;
     if (std::signal(SIGINT, &SignalHandler::ctrl_c) == SIG_ERR)
     {
       std::cerr << "Error: init signal" << std::endl;
@@ -17,11 +17,11 @@ public:
   }
 
   bool getFlag(){
-    return flag_g;
+    return flagExit_g;
   }
 
   static void ctrl_c(int){
-    flag_g = true;
+    flagExit_g = true;
   }
 private:
 };

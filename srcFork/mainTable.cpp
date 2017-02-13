@@ -1,5 +1,6 @@
 #include <iostream>
 #include <list>
+#include "Philosophe.hpp"
 #include "Execve.hpp"
 #include "Fork.hpp"
 #include "Semaphore.hpp"
@@ -11,6 +12,10 @@ int main(int ac, char *av[], char *env[]) {
   std::list<Fork*> fList;
   size_t nbPhilo = 5;
   Fork *f;
+
+  //No more warning
+  (void)ac;
+  (void)av;
 
   // Creation of Philosophes
   for (size_t i = 0; i < nbPhilo; i++) {
@@ -30,14 +35,28 @@ int main(int ac, char *av[], char *env[]) {
     sleep (1);
   }
   SHM<int> shm("./", nbPhilo);
-  /*
-//while (!signal.getFlag()) {
+
+  while (!signal.getFlag()) {
     for (size_t i = 0; i < nbPhilo; i++) {
-      std::cout << "Philosophe[" << i <<"] :" << shm.read(i) << '\n';
-    //  sleep(1);
+      std::cout << "[" << i <<"]: ";
+      switch (shm.read(i)) {
+        case Philosophe::SLEEP:
+          std::cout <<  "SLEEP";
+          break;
+        case Philosophe::EAT:
+          std::cout <<  "EAT  ";
+          break;
+        case Philosophe::THINK:
+          std::cout <<  "THINK";
+          break;
+        default:
+          break;
+      }
+      std::cout << " ";
+      usleep(1000);
     }
-//  }
-*/
+    std::cout << std::endl;
+  }
   while (fList.size()) {
     fList.front()->wait();
     delete fList.front();

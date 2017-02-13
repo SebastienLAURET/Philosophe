@@ -6,6 +6,7 @@
 #include <sstream>
 #include "SHM.hpp"
 #include "Semaphore.hpp"
+//#include "signalHandler.hpp"
 
 class Philosophe {
 
@@ -28,7 +29,7 @@ private:
   void          sleep();
   void          displayState();
 
-  size_t                    _id;
+  int                    _id;
   size_t                    _maxPhilo;
   SHM<Philosophe::e_state>  _shm;
   Semaphore                 _sem;
