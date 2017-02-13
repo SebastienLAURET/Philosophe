@@ -12,8 +12,9 @@ OBJ1	= $(FILE1:.cpp=.o)
 NAME2	= philoFork
 
 FILE2	= srcFork/Abstraction/Semaphore.cpp 	\
-				srcFork/Abstraction/Fork.cpp	 				\
-				srcFork/Abstraction/Execve.cpp	 				\
+				srcFork/Abstraction/Fork.cpp	 			\
+				srcFork/Abstraction/Execve.cpp	 		\
+				srcFork/Philosophe.cpp							\
 				srcFork/mainTable.cpp
 
 

@@ -4,7 +4,8 @@
 #include <thread>
 #include <mutex>
 #include <sstream>
-#include "Display.hpp"
+#include "SHM.hpp"
+#include "Semaphore.hpp"
 
 class Philosophe {
 
@@ -15,33 +16,22 @@ public:
     SLEEP
   };
 
-  Philosophe(std::mutex&, std::mutex&,
-             int id, Display &disp);
+  Philosophe(size_t id, size_t maxPhilo);
   ~Philosophe();
 
   void          operator()();
-  void          run();
-  void          join();
   e_state       getState();
-  void          setPhiloG(Philosophe *philo);
-  void          setPhiloD(Philosophe *philo);
-  static void   trampoline(Philosophe*);
+
 private:
   void          think(bool);
   void          eat();
   void          sleep();
   void          displayState();
 
-  std::mutex    &_baguetteG;
-  std::mutex    &_baguetteD;
-
-  Philosophe    *_philoG;
-  Philosophe    *_philoD;
-
-  e_state       _state;
-  int           _id;
-  Display       &_disp;
-  std::thread   _thread;
+  size_t                    _id;
+  size_t                    _maxPhilo;
+  SHM<Philosophe::e_state>  _shm;
+  Semaphore                 _sem;
 };
 
 #endif //PHILOSOPHE_HPP

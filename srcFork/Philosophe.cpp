@@ -7,26 +7,24 @@
 /*
 **  constructor
 */
-Philosophe::Philosophe(Semaphore &bagG, Semaphore &bagD,
-                      int id, MsgQueue &msg)
-: _baguetteG(bagG), _baguetteD(bagD),
-  _state(SLEEP), _id(id), _disp(disp) {
-
+Philosophe::Philosophe(size_t id, size_t maxPhilo)
+ : _id(id), _maxPhilo(maxPhilo), _shm("./", maxPhilo), _sem(maxPhilo){
 }
+
 Philosophe::~Philosophe() {
-
 }
-
 
 void      Philosophe::operator()() {
   bool    bagGIsLock;
   bool    bagDIsLock;
 
   while (true) {
-      bagGIsLock = this->_baguetteG.try_lock();
-      bagDIsLock = this->_baguetteD.try_lock();
-    //  std::cout << " "<< bagGIsLock << " "<< bagDIsLock << std::endl;
-      if (bagDIsLock &&  bagGIsLock) {
+      bagGIsLock = _sem.tryLock(_id);
+      bagDIsLock = _sem.tryLock((_id + 1) % _maxPhilo);
+
+      std::cout << " "<< bagGIsLock << " "<< bagDIsLock << std::endl;
+
+      if (bagDIsLock && bagGIsLock) {
         this->eat();
       } else if ((bagGIsLock || bagDIsLock)  ) {
         this->think(bagGIsLock);
@@ -36,79 +34,38 @@ void      Philosophe::operator()() {
 }
 
 Philosophe::e_state   Philosophe::getState() {
-  return this->_state;
+  return _shm.read(_id);
 }
-
-void      Philosophe::setPhiloG(Philosophe *philo) {
-  this->_philoG = philo;
-}
-
-void      Philosophe::setPhiloD(Philosophe *philo) {
-  this->_philoD = philo;
-}
-
-void      Philosophe::run() {
-  this->_thread = std::thread(Philosophe::trampoline, this);
-}
-
-void      Philosophe::join() {
-  this->_thread.join();
-}
-
-void      Philosophe::trampoline(Philosophe *self) {
-  Philosophe &philo = *self;
-  philo();
-}
-
 /*
 ** private
 */
 
 void      Philosophe::think (bool selBag) {
-  this->_state = THINK;
-  this->displayState();
+  _shm.write(_id, Philosophe::THINK);
 
   if (selBag) {
-    _baguetteD.lock();
+    _sem.lock((_id + 1) % _maxPhilo);
   } else {
-    _baguetteG.lock();
+    _sem.lock(_id);
   }
   std::this_thread::sleep_for(std::chrono::milliseconds(100));
   this->eat();
 }
 
 void      Philosophe::eat () {
-  this->_state = EAT;
-  this->displayState();
+  _shm.write(_id, Philosophe::EAT);
   std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 
-  this->_baguetteG.unlock();
-  this->_baguetteD.unlock();
+  _sem.unlock(_id);
+  _sem.unlock((_id + 1) % _maxPhilo);
 
   this->sleep();
 }
 
 void      Philosophe::sleep() {
-  this->_state = SLEEP;
-  this->displayState();
+  _shm.write(_id, Philosophe::SLEEP);
   std::this_thread::sleep_for(std::chrono::milliseconds(10));
 
-  while (this->_philoG->getState() == THINK
-        && this->_philoD->getState() == THINK);
-}
-
-void      Philosophe::displayState() {
-  std::stringstream str;
-  std::string statesTab[3] = {
-    "THINK ",
-    "EAT   ",
-    "SLEEP "
-  };
-
-  str << "Philosophe ";
-  str << this->_id;
-  str << " : ";
-  str << statesTab[(int)this->_state];
-
-  _disp.print(this->_id, str.str());
+  while (_shm.read(((_id - 1) < 0) ? _maxPhilo : _id - 1) == Philosophe::THINK
+        && _shm.read((_id + 1) % _maxPhilo) == THINK);
 }
