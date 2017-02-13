@@ -31,8 +31,8 @@ int main(int ac, char *av[], char *env[]) {
       Execve exec(env);
       exec("./philo", &tmp);
     }
-    std::cout << std::endl;
-    sleep (1);
+  //  std::cout << std::endl;
+    //sleep (1);
   }
   SHM<int> shm("./", nbPhilo);
 
