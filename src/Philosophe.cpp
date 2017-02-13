@@ -25,13 +25,12 @@ void      Philosophe::operator()() {
   while (true) {
       bagGIsLock = this->_baguetteG.try_lock();
       bagDIsLock = this->_baguetteD.try_lock();
-    //  std::cout << " "<< bagGIsLock << " "<< bagDIsLock << std::endl;
+
       if (bagDIsLock &&  bagGIsLock) {
         this->eat();
       } else if ((bagGIsLock || bagDIsLock)  ) {
         this->think(bagGIsLock);
       }
-//      std::this_thread::sleep_for(std::chrono::milliseconds(1000));
   }
 }
 

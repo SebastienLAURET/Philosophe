@@ -20,18 +20,12 @@ void Execve::operator()(const std::string &filename, std::vector<std::string> *a
      args[i] = new char[arg.size() + 1];
      std::memset(args[i], 0, arg.size() + 1);
      std::memcpy(args[i], arg.c_str(), arg.size());
-     std::cout << "Argument "<< i << " " <<args[i] << std::endl;
     ++i;
    }
   }
   args[i] = NULL;
-  i = 0;
-  while (args[i]) {
-    std::cout << args[i] << '\n';
-    ++i;
-  }
 
-  std::cout << execve(filename.c_str(), args, _env) << std::endl;
+  execve(filename.c_str(), args, _env);
   if (argVector)
     delete args;
 }

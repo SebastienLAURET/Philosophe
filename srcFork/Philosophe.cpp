@@ -50,7 +50,7 @@ void      Philosophe::think (bool selBag) {
   } else {
     _sem.lock(_id);
   }
-  std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+//  std::this_thread::sleep_for(std::chrono::milliseconds(1000));
   this->eat();
 }
 
@@ -66,7 +66,7 @@ void      Philosophe::eat () {
 
 void      Philosophe::sleep() {
   _shm.write(_id, Philosophe::SLEEP);
-  std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+//  std::this_thread::sleep_for(std::chrono::milliseconds(1000));
   while (_shm.read(((_id - 1) < 0) ? _maxPhilo : _id - 1) == Philosophe::THINK
         && _shm.read((_id + 1) % _maxPhilo) == THINK);
 }

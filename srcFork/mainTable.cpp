@@ -53,7 +53,7 @@ int main(int ac, char *av[], char *env[]) {
           break;
       }
       std::cout << " ";
-      usleep(1000);
+      usleep(100000);
     }
     std::cout << std::endl;
   }
