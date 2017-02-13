@@ -1,17 +1,21 @@
 #include <iostream>
 #include "Semaphore.hpp"
 
-Semaphore::Semaphore() {
+Semaphore::Semaphore(int nb) {
   _key = ftok("./", 'c');
-  if ((_semId = semget(_key, 1, SHM_R | SHM_W)) <= 0) {
-    _semId = semget(_key, 1, IPC_CREAT | SHM_R | SHM_W);
+  _nb = nb;
+  if ((_semId = semget(_key, _nb, SHM_R | SHM_W)) <= 0) {
+    _semId = semget(_key, _nb, IPC_CREAT | SHM_R | SHM_W);
     semctl(_semId, 0, SETALL, 1);
   }
   std::cout << "id Sem :"<< _key << " " <<_semId<< '\n';
 }
 
 Semaphore::~Semaphore() {
-  semctl(_semId, 0, IPC_RMID, 0);
+  for (size_t i = 0; i < _nb; i++) {
+    /* code */
+    semctl(_semId, _nb, IPC_RMID, 0);
+  }
 }
 
 void Semaphore::lock(int sem_num){
@@ -35,4 +39,4 @@ int Semaphore::operator()(int sem_num, int sem_op, int sem_flg) {
     _op.sem_op = sem_op;
     _op.sem_flg = sem_flg;
     return semop(_semId, &_op, 1);
-  }
+}
