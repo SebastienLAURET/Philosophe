@@ -23,7 +23,7 @@ NAME3	= philo
 
 FILE3	= srcFork/Abstraction/Semaphore.cpp 	\
 				srcFork/Philosophe.cpp							\
-				srcFork/main.c
+				srcFork/main.cpp
 
 
 OBJ3	= $(FILE3:.cpp=.o)
@@ -52,10 +52,10 @@ $(NAME3): $(OBJ3)
 
 
 fclean:
-	$(RM) $(OBJ1) $(OBJ2)
+	$(RM) $(OBJ1) $(OBJ2) $(OBJ3)
 
 clean: fclean
-	$(RM) $(NAME1) $(NAME2)
+	$(RM) $(NAME1) $(NAME2) $(NAME3)
 
 re: clean all
 
