@@ -2,7 +2,7 @@
 Auteur:
   * Sebastien Lauret
   * Alex Dana
-  * Selim el kaida
+  * Selim El Kefi
 
 ## Philosophe Thread
 
