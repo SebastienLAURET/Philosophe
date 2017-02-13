@@ -4,7 +4,10 @@
 #include "Semaphore.hpp"
 #include "MsgHandler.hpp"
 #include <unistd.h>
+#include "signalHandler.hpp"
+
 int main() {
+  SignalHandler signal;
   std::string path1("./philo1"), path2("./philo2");
 
   Fork f;
