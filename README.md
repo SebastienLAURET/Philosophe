@@ -1,7 +1,7 @@
 #Philosophe
 Auteur:
-  * Sebastien Lauret
-  * Alex Dana
+  * (Sebastien Lauret)[https://github.com/SebastienLAURET]
+  * (Alex Dana)[https://github.com/MisterAlex95]
   * Selim El Kefi
 
 ## Philosophe Thread
