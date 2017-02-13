@@ -16,7 +16,11 @@ public:
     }
   }
 
-  static void ctrl_c(int nb){
+  bool getFlag(){
+    return flag_g;
+  }
+
+  static void ctrl_c(int){
     flag_g = true;
   }
 private:

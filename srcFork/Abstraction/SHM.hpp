@@ -11,9 +11,9 @@ template<typename T>
 class SHM {
 public:
 
-  SHM(const std::string str, int flag = (SHM_W | SHM_R)) {
+  SHM(const std::string str, int nb, int flag = (SHM_W | SHM_R)) {
     _shmId = 0;
-    init(str, flag);
+    init(str, nb, flag);
   }
 
   ~SHM() {
@@ -24,11 +24,11 @@ public:
     return (_shmId > 0);
   }
 
-  bool init(const std::string &path, int flag = (SHM_W | SHM_R)) {
+  bool init(const std::string &path, int nb, int flag = (SHM_W | SHM_R)) {
     key_t key = ftok(path.c_str(), 's');
-    _shmId = shmget(key, 5 * sizeof(T), flag);
+    _shmId = shmget(key, nb * sizeof(T), flag);
     if (_shmId == -1) {
-      _shmId = shmget(key, 5 * sizeof(T), IPC_CREAT | SHM_R | SHM_W);
+      _shmId = shmget(key, nb * sizeof(T), IPC_CREAT | SHM_R | SHM_W);
     }
     _ptr = static_cast<T*>(shmat(_shmId, NULL, flag));
     return isOpen();

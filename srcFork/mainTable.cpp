@@ -1,6 +1,5 @@
 #include <iostream>
-#include <cstring>
-#include <unistd.h>
+#include <list>
 #include "Fork.hpp"
 #include "Semaphore.hpp"
 #include "signalHandler.hpp"
@@ -8,26 +7,36 @@
 
 int main() {
   SignalHandler signal;
-  std::string path1("./philo1"), path2("./philo2");
+  std::list<Fork*> fList;
+  size_t nbPhilo = 5;
+  Fork *f;
+  for (size_t i = 0; i < nbPhilo; i++) {
+    f = new Fork();
+    (*f)();
+    if (f->isChildProcess()) {
+      SHM<int> shm("./", nbPhilo);
+      shm.write(i, i+3);
+      break;
+    } else
+      fList.push_front(f);
+    std::cout << "toto" << i << '\n';
+  }
 
-  Fork f;
-  f();
-
-
-
-  if (f.isChildProcess()) {
-    Semaphore   sem(1);
-    SHM<int> test(".");
-    sleep(1);
-    test.write(0, 12);
-   sem.unlock(0);
+  if (!fList.front()->isChildProcess()) {
+    SHM<int> shm("./", nbPhilo);
+  //  while (!signal.getFlag()) {
+      for (size_t i = 0; i < nbPhilo; i++) {
+        std::cout << i <<":" << shm.read(i) << '\n';
+      //  sleep(1);
+      }
+    //}
+    while (fList.size()) {
+      fList.front()->wait();
+      delete fList.front();
+      fList.pop_front();
+    }
   } else {
-    SHM<int> test(".");
-    Semaphore   sem(1);
-
-    sem.lock(0);
-    std::cout << test.read(0) << std::endl;
-    f.wait();
+    sleep(2);
   }
   return 0;
 }
