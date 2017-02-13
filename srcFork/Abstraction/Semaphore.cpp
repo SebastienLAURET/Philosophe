@@ -1,10 +1,10 @@
 #include <iostream>
 #include "Semaphore.hpp"
 
-Semaphore::Semaphore() {
+Semaphore::Semaphore(int nb) {
   _key = ftok("./", 0);
-  if ((_semId = semget(_key, 1, SHM_R | SHM_W)) <= 0) {
-    _semId = semget(_key, 1, IPC_CREAT | SHM_R | SHM_W);
+  if ((_semId = semget(_key, nb, SHM_R | SHM_W)) <= 0) {
+    _semId = semget(_key, nb, IPC_CREAT | SHM_R | SHM_W);
     semctl(_semId, 0, SETALL, 1);
   }
   std::cout << "id Sem :"<< _key << " " <<_semId<< '\n';

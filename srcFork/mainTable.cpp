@@ -11,7 +11,7 @@ int main() {
   f();
   if (f.isChildProcess()) {
     MsgHandler  msgHand(path1, path2);
-    Semaphore   sem;
+    Semaphore   sem(3);
 
     msgHand.queueW.push(std::string("tototototo"));
     msgHand.queueW.push(std::string("tititititi"));
@@ -21,7 +21,7 @@ int main() {
   } else {
 
     MsgHandler msgHand(path2, path1);
-    Semaphore   sem;
+    Semaphore   sem(3);
 
     sem.lock(0);
     while (msgHand.queueR.size()) {

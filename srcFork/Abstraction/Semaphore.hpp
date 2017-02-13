@@ -13,7 +13,7 @@ private:
   int     _semId;
 
 public:
-  Semaphore();
+  Semaphore(int nb);
   ~Semaphore();
 
   void lock(int);
