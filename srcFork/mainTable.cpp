@@ -1,10 +1,11 @@
 #include <iostream>
 #include <cstring>
+#include <unistd.h>
 #include "Fork.hpp"
 #include "Semaphore.hpp"
 #include "MsgHandler.hpp"
-#include <unistd.h>
 #include "signalHandler.hpp"
+#include "SHM.hpp"
 
 int main() {
   SignalHandler signal;
@@ -12,6 +13,12 @@ int main() {
 
   Fork f;
   f();
+
+  SHM<int> test(".");
+
+  test.write(0, 12);
+  std::cout << test.read(0) << std::endl;
+
   if (f.isChildProcess()) {
     MsgHandler  msgHand(path1, path2);
     Semaphore   sem;
